@@ -1,0 +1,62 @@
+#include <iostream>
+#include <map>
+
+using namespace std;
+
+// Define the CS:GO items and their costs
+map<string, int> itemCosts = {
+    {"AK-47", 2700},
+    {"M4A4", 3100},
+    {"AWP", 4750},
+    {"Kevlar", 650},
+    {"Helmet", 350},
+    {"Flashbang", 200},
+    {"Smoke Grenade", 300},
+    {"HE Grenade", 300},
+    {"Defuse Kit", 400}
+};
+
+// Function to display the buy menu and calculate total cost
+int displayBuyMenu() {
+    cout << "CS:GO Buy Menu\n";
+    cout << "---------------\n";
+
+    // Display items and their costs
+    for (const auto& item : itemCosts) {
+        cout << item.first << "\t\t$" << item.second << endl;
+    }
+
+    cout << "\nSelect items to buy (enter item names, separated by spaces):\n";
+
+    // Read user input for selected items
+    string input;
+    getline(cin, input);
+
+    // Tokenize the user input
+    size_t pos = 0;
+    string token;
+    int totalCost = 0;
+
+    while ((pos = input.find(' ')) != string::npos) {
+        token = input.substr(0, pos);
+        if (itemCosts.find(token) != itemCosts.end()) {
+            totalCost += itemCosts[token];
+        }
+        input.erase(0, pos + 1);
+    }
+
+    // Check the last token
+    if (itemCosts.find(input) != itemCosts.end()) {
+        totalCost += itemCosts[input];
+    }
+
+    return totalCost;
+}
+
+int main() {
+    int totalCost = displayBuyMenu();
+
+    cout << "\nTotal Cost: $" << totalCost << endl;
+
+    return 0;
+}
